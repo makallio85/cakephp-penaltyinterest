@@ -254,7 +254,6 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $InterestPeriod->variableInterestCountry = $listItem['country'];
             $result = $InterestPeriod->resolveSplitPoints($listItem);
-            debug($result);
             $this->assertTrue($listItem['assertedSplitPoints'] == $result['splitPoints']);
         }
     }
