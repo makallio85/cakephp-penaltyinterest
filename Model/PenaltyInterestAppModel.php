@@ -1,6 +1,6 @@
 <?php
 
-class PenaltyInterestAppModel extends Model
+class PenaltyInterestAppModel extends AppModel
 {
     public $statusCode = STATUS_CODES::INIT;
     public $statusMessage = STATUS_MESSAGES::INIT;

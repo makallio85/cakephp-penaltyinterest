@@ -4,7 +4,7 @@
  * PHP file
  */
 
-App::import('Model', 'InterestPeriod');
+App::import('Model', 'PenaltyInterest.InterestPeriod');
 
 /**
  * InterestPeriod model test class

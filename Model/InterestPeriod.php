@@ -5,7 +5,7 @@
  */
 
 App::uses('CakeTime', 'Utility');
-App::import('Model', 'VariableInterest');
+App::import('Model', 'PenaltyInterest.VariableInterest');
 
 /**
  * InterePeriod model
