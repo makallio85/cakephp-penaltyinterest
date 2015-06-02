@@ -8,7 +8,9 @@ Some notes:
 - All money values are hundreths of original value, so 100 converts to 10000 and 1 converts to 100.
 - All interest values are ten thousands of original value, so 10 converts to 100000
 
-Usage:
+Steps to usage:
+- Migrate database
+- Use code below
 
 ```php
 $PR = new PenaltyInterest();
