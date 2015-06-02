@@ -8,7 +8,7 @@ App::uses('CakeTime', 'Utility');
 App::import('Model', 'PenaltyInterest.VariableInterest');
 
 /**
- * InterePeriod model
+ * InterestPeriod model
  */
 class InterestPeriod extends PenaltyInterestAppModel
 {

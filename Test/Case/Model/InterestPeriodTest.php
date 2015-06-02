@@ -189,10 +189,6 @@ class InterestPeriodTestCase extends CakeTestCase
                         'hundrethBaseValue' => (int) 9900,
                     ],
                     [
-                        'date' => '2014-07-01',
-                        'hundrethBaseValue' => (int) 9900,
-                    ],
-                    [
                         'date' => '2014-07-22',
                         'hundrethBaseValue' => (int) 9800,
                     ],
@@ -231,10 +227,6 @@ class InterestPeriodTestCase extends CakeTestCase
                     ],
                     [
                         'date' => '2014-05-15',
-                        'hundrethBaseValue' => (int) 9900,
-                    ],
-                    [
-                        'date' => '2014-07-01',
                         'hundrethBaseValue' => (int) 9900,
                     ],
                     [
@@ -514,8 +506,9 @@ class InterestPeriodTestCase extends CakeTestCase
         $dataSets = [
             [
                 'assert' => false,
-                'variableInterestCountry' => 'FIN',
+                'country' => 'FIN',
                 'interestCalculationType' => 'english',
+                'interestPercentType' => 'variable',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
                 'firstDate' => '2014-01-01s',
@@ -584,7 +577,8 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'variableInterestCountry' => 'FIN',
+                'country' => 'FIN',
+                'interestPercentType' => 'variable',
                 'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
@@ -654,7 +648,8 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'variableInterestCountry' => 'FIN',
+                'country' => 'FIN',
+                'interestPercentType' => 'variable',
                 'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
@@ -741,8 +736,9 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'variableInterestCountry' => 'FIN',
-                'interestCalculationType' => 'french',
+                'country' => 'FIN',
+                'interestPercentType' => 'variable',
+                'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
                 'firstDate' => '2014-01-01',
@@ -789,7 +785,7 @@ class InterestPeriodTestCase extends CakeTestCase
                         'lastDate' => '2014-05-14',
                         'hundrethBaseValue' => (int) 10000,
                         'tenThousandthPercent' => (int) 100000,
-                        'hundrethInterestValue' => (int) 369,
+                        'hundrethInterestValue' => (int) 364,
                         'interestDays' => (int) 133,
                     ],
                     [
@@ -797,7 +793,7 @@ class InterestPeriodTestCase extends CakeTestCase
                         'lastDate' => '2014-06-30',
                         'hundrethBaseValue' => (int) 9900,
                         'tenThousandthPercent' => (int) 100000,
-                        'hundrethInterestValue' => (int) 127,
+                        'hundrethInterestValue' => (int) 125,
                         'interestDays' => (int) 46
                     ],
                     [
@@ -805,7 +801,7 @@ class InterestPeriodTestCase extends CakeTestCase
                         'lastDate' => '2014-07-21',
                         'hundrethBaseValue' => (int) 9900,
                         'tenThousandthPercent' => (int) 100000,
-                        'hundrethInterestValue' => (int) 55,
+                        'hundrethInterestValue' => (int) 54,
                         'interestDays' => (int) 20
                     ],
                     [
@@ -813,7 +809,7 @@ class InterestPeriodTestCase extends CakeTestCase
                         'lastDate' => '2014-09-29',
                         'hundrethBaseValue' => (int) 9800,
                         'tenThousandthPercent' => (int) 100000,
-                        'hundrethInterestValue' => (int) 188,
+                        'hundrethInterestValue' => (int) 185,
                         'interestDays' => (int) 69
                     ],
                     [
@@ -821,7 +817,7 @@ class InterestPeriodTestCase extends CakeTestCase
                         'lastDate' => '2014-12-31',
                         'hundrethBaseValue' => (int) 9700,
                         'tenThousandthPercent' => (int) 100000,
-                        'hundrethInterestValue' => (int) 248,
+                        'hundrethInterestValue' => (int) 244,
                         'interestDays' => (int) 92
                     ],
                 ],
@@ -832,10 +828,10 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod = new InterestPeriod();
             $InterestPeriod->interestCalculationType = $listItem['interestCalculationType'];
             $InterestPeriod->interestDate = $listItem['lastDate'];
-            $InterestPeriod->variableInterestCountry = $listItem['variableInterestCountry'];
+            $InterestPeriod->variableInterestCountry = $listItem['country'];
             $result = $InterestPeriod->preparePeriods($listItem);
             if ($listItem['assert']) {
-                $this->assertTrue($listItem['assertedPeriods'] == $result['preparedPeriods']);
+                $this->assertTrue($listItem['assertedPeriods'] == $result);
             } else {
                 $this->assertFalse($result);
             }
