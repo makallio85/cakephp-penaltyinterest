@@ -11,7 +11,6 @@ env:
 
   matrix:
     - DB=mysql CAKE_VERSION=2.5
-    - DB=mysql CAKE_VERSION=2.6
 
 matrix:
   include:
@@ -27,6 +26,7 @@ matrix:
 
 before_script:
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
+  - ../lib/Cake/Console/cake Migrations.migration run --plugin PenaltyInterest
   - ../travis/before_script.sh
 
 script:
