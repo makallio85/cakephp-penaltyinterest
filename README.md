@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/makallio85/cakephp-penaltyinterest/badge.svg)](https://coveralls.io/r/makallio85/cakephp-penaltyinterest)
 [![Build Status](https://travis-ci.org/makallio85/cakephp-penaltyinterest.svg)](https://travis-ci.org/makallio85/cakephp-penaltyinterest)
 
 # cakephp-penaltyinterest
