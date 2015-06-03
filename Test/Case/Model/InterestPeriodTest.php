@@ -19,6 +19,7 @@ class InterestPeriodTestCase extends CakeTestCase
         $dataSets = [
             [
                 'assert' => false,
+                'interestPercentType' => 'variable',
                 'firstDate' => '2014-01-01ss xx', // This should fail, as firstDate is not valid
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [
@@ -29,6 +30,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => false,
+                'interestPercentType' => 'variable',
                 'firstDate' => '2014-01-01',
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [
@@ -39,6 +41,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => false,
+                'interestPercentType' => 'variable',
                 'firstDate' => '2014-01-01',
                 'lastDate' => '2014-13-22', // This should fail, as lastDate is not valid
                 'valuePayments' => [
@@ -49,6 +52,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => false,
+                'interestPercentType' => 'variable',
                 'firstDate' => '2014-01-01',
                 'lastDate' => '2013-01-01', // This should fail, as firstDate can't be bigger than lastDate
                 'valuePayments' => [
@@ -58,7 +62,19 @@ class InterestPeriodTestCase extends CakeTestCase
                 ],
             ],
             [
+                'assert' => false,
+                'interestPercentType' => 'variable',
+                'firstDate' => '2014-01-01',
+                'lastDate' => '2100-01-01', // This should fail, as lastDate is out of range in variable_interests table
+                'valuePayments' => [
+                    [
+                        'date' => '2014-05-15',
+                    ],
+                ],
+            ],
+            [
                 'assert' => true, // This should pass, as all dates are valid
+                'interestPercentType' => 'variable',
                 'firstDate' => '2014-01-01',
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [

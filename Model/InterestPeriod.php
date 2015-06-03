@@ -64,24 +64,48 @@ class InterestPeriod extends PenaltyInterestAppModel
      */
     public function datesAreValid($data)
     {
+        /* Validate firstDate */
         if (!isset($data['firstDate']) || !Validation::date($data['firstDate'], 'ymd')) {
             $this->setStatus('INVALID_FIRST_DATE');
 
             return false;
         }
 
-        if ($data['firstDate'] > $this->interestDate) {
-            $this->setStatus('FIRST_DATE_CANT_BE_BIGGER_THAN_INTEREST_DATE');
-
-            return false;
-        }
-
+        /* Validate interestDate */
         if (!Validation::date($this->interestDate, 'ymd')) {
             $this->setStatus('INVALID_INTEREST_DATE');
 
             return false;
         }
 
+        /* firstDate can not be bigger than interestDate */
+        if ($data['firstDate'] > $this->interestDate) {
+            $this->setStatus('FIRST_DATE_CANT_BE_BIGGER_THAN_INTEREST_DATE');
+
+            return false;
+        }
+
+        // If interestPercentType is variable, check from database,
+        // if there are required interest periods present
+        if ($data['interestPercentType'] == 'variable') {
+            $VarIntr = new VariableInterest();
+            $results = $VarIntr->find(
+                'all',
+                [
+                    'conditions' => [
+                        'last_date >=' => $data['lastDate'],
+                        'country' => strtoupper($this->variableInterestCountry),
+                    ]
+                ]
+            );
+            if (count($results) == 0) {
+                $this->setStatus('DATABASE_IS_MISSING_REQUIRED_VARIABLE_INTEREST_PERIOD');
+
+                return false;
+            }
+        }
+
+        /* Iterate value payments and validate */
         if (isset($data['valuePayments'])) {
             foreach ($data['valuePayments'] as $listItem) {
                 if (!Validation::date($listItem['date'], 'ymd')) {
@@ -252,7 +276,7 @@ class InterestPeriod extends PenaltyInterestAppModel
                     );
                     $listItem['interestDays'] = (int) $diff;
                     break;
-                case 'german': // This should be implemented. Same as french but month has always 30 days.
+                case 'german': // This should be implemented. Same as french one but month has always 30 days.
                     break;
             }
         }
@@ -306,6 +330,7 @@ class InterestPeriod extends PenaltyInterestAppModel
             }
         }
 
+        /* Perform date checks */
         $dateCheck = $this->datesAreValid($data);
         if (!$dateCheck) {
             return false;

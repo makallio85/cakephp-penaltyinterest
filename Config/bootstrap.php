@@ -13,6 +13,7 @@ class STATUS_CODES
     const FIRST_DATE_CANT_BE_BIGGER_THAN_INTEREST_DATE = 400;
     const INVALID_INTEREST_PERCENT_TYPE = 400;
     const INVALID_COUNTRY = 400;
+    const DATABASE_IS_MISSING_REQUIRED_VARIABLE_INTEREST_PERIOD = 400;
     const SUCCESS = 200;
 }
 
@@ -30,5 +31,6 @@ class STATUS_MESSAGES
     const INVALID_INTEREST_PERCENT_TYPE = 'Invalid interest type or it is missing.';
     const INVALID_INTEREST_PERCENT = 'Invalid interest percent or it is missing.';
     const INVALID_COUNTRY = 'Invalid country or it is missing.';
+    const DATABASE_IS_MISSING_REQUIRED_VARIABLE_INTEREST_PERIOD = 'Database is missing requires variable interest period.';
     const SUCCESS = 'Success.';
 }
