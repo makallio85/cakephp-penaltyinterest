@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP File
+ * app/Plugin/PenaltyInterest/Model/InterestPeriod.php
  */
 
 App::uses('CakeTime', 'Utility');
@@ -45,9 +45,9 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * InterestPeriod model constructor
      *
-     * @param  bool|int $id    Model id
-     * @param  string          $table Name of database table to use.
-     * @param  string          $ds    DataSource connection name.
+     * @param bool|int $id    Model id
+     * @param string   $table Name of database table to use.
+     * @param string   $ds    DataSource connection name.
      */
     public function __construct($id = false, $table = null, $ds = null)
     {
@@ -58,7 +58,8 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * This method checks that are used dates are in valid format
      *
-     * @param  array   $data Data that contains dates to chek
+     * @param array $data Data that contains dates to chek
+     *
      * @return bool
      */
     public function datesAreValid($data)
@@ -68,6 +69,13 @@ class InterestPeriod extends PenaltyInterestAppModel
 
             return false;
         }
+
+        if ($data['firstDate'] > $this->interestDate) {
+            $this->setStatus('FIRST_DATE_CANT_BE_BIGGER_THAN_INTEREST_DATE');
+
+            return false;
+        }
+
         if (!Validation::date($this->interestDate, 'ymd')) {
             $this->setStatus('INVALID_INTEREST_DATE');
 
@@ -90,7 +98,8 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Method creates periods based on payments.
      *
-     * @param  array $data Data to use
+     * @param array $data Data to use
+     *
      * @return array
      */
     public function preparePaymentPeriods($data)
@@ -133,7 +142,8 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Method creates periods from payment periods based on variable interest rate
      *
-     * @param  array $data Data to use
+     * @param array $data Data to use
+     *
      * @return array
      */
     public function resolveSplitPoints($data)
@@ -181,7 +191,8 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Method inserts period last dates based on next periods start date
      *
-     * @param  array $data Data to use
+     * @param array $data Data to use
+     *
      * @return array
      */
     public function resolveLastDates($data)
@@ -209,7 +220,8 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Method performs actual interest calculation
      *
-     * @param  array $data Data to use
+     * @param array $data Data to use
+     *
      * @return array
      */
     public function calculateInterests($data)
@@ -221,16 +233,21 @@ class InterestPeriod extends PenaltyInterestAppModel
             switch ($this->interestCalculationType) {
                 case 'english':
                     $listItem['tenThousandthPercent'] = (int) $data['tenThousandthPercent'];
-                    $listItem['hundrethInterestValue'] = (int) round($listItem['hundrethBaseValue'] * 
-                        ($data['tenThousandthPercent'] / 1000000) / 365 * $diff);
+                    $listItem['hundrethInterestValue'] = (int) round(
+                        $listItem['hundrethBaseValue'] *
+                        ($data['tenThousandthPercent'] / 1000000) / 365 * $diff
+                    );
                     $listItem['interestDays'] = (int) $diff;
                     break;
                 case 'french':
-                case 'german':
                     $listItem['tenThousandthPercent'] = (int) $data['tenThousandthPercent'];
-                    $listItem['hundrethInterestValue'] = (int) round($listItem['hundrethBaseValue'] * 
-                        ($data['tenThousandthPercent'] / 1000000) / 360 * $diff);
+                    $listItem['hundrethInterestValue'] = (int) round(
+                        $listItem['hundrethBaseValue'] *
+                        ($data['tenThousandthPercent'] / 1000000) / 360 * $diff
+                    );
                     $listItem['interestDays'] = (int) $diff;
+                    break;
+                case 'german': // This should be implemented. Same as french but month has always 30 days.
                     break;
             }
         }
@@ -241,10 +258,11 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Method validates given data and sets error codes
      *
-     * @param  array   $data Data to use
+     * @param array $data Data to use
+     *
      * @return bool
      */
-    public function checkRequiredData($data)
+    protected function checkRequiredData($data)
     {
         /* These indexes as required at least */
         if (
@@ -294,10 +312,11 @@ class InterestPeriod extends PenaltyInterestAppModel
     /**
      * Main method. Callable outside class
      *
-     * @param  array         $data Data to use in calculations
+     * @param array $data Data to use in calculations
+     *
      * @return bool|array
      */
-    public function preparePeriods($data)
+    public function calculate($data)
     {
         $dataCheck = $this->checkRequiredData($data);
         if (!$dataCheck) {

@@ -8,18 +8,18 @@ App::import('Model', 'PenaltyInterest.InterestPeriod');
 
 /**
  * InterestPeriod model test class
- *
- * @author Kallio, Marko
- *
  */
 class InterestPeriodTestCase extends CakeTestCase
 {
+    /**
+     * Test datesAreValid method
+     */
     public function testDatesAreValid()
     {
         $dataSets = [
             [
                 'assert' => false,
-                'firstDate' => '2014-01-01ss xx',
+                'firstDate' => '2014-01-01ss xx', // This should fail, as firstDate is not valid
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [
                     [
@@ -33,14 +33,14 @@ class InterestPeriodTestCase extends CakeTestCase
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [
                     [
-                        'date' => '2014-05-152',
+                        'date' => '2014-05-152', // This should fail, as date is not valid
                     ],
                 ],
             ],
             [
                 'assert' => false,
                 'firstDate' => '2014-01-01',
-                'lastDate' => '2014-13-22',
+                'lastDate' => '2014-13-22', // This should fail, as lastDate is not valid
                 'valuePayments' => [
                     [
                         'date' => '2014-05-15',
@@ -48,7 +48,17 @@ class InterestPeriodTestCase extends CakeTestCase
                 ],
             ],
             [
-                'assert' => true,
+                'assert' => false,
+                'firstDate' => '2014-01-01',
+                'lastDate' => '2013-01-01', // This should fail, as firstDate can't be bigger than lastDate
+                'valuePayments' => [
+                    [
+                        'date' => '2014-05-15',
+                    ],
+                ],
+            ],
+            [
+                'assert' => true, // This should pass, as all dates are valid
                 'firstDate' => '2014-01-01',
                 'lastDate' => '2014-12-31',
                 'valuePayments' => [
@@ -62,6 +72,7 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod = new InterestPeriod();
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $result = $InterestPeriod->datesAreValid($listItem);
+
             if ($listItem['assert']) {
                 $this->assertTrue($result);
             } else {
@@ -70,6 +81,9 @@ class InterestPeriodTestCase extends CakeTestCase
         }
     }
 
+    /**
+     * Test preparePaymentPeriods method
+     */
     public function testPreparePaymentPeriods()
     {
         $dataSets = [
@@ -151,10 +165,14 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod = new InterestPeriod();
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $result = $InterestPeriod->preparePaymentPeriods($listItem);
+
             $this->assertTrue($listItem['assertedPaymentPeriods'] == $result['preparedPaymentPeriods']);
         }
     }
 
+    /**
+     * Test resolveSplitPoints method
+     */
     public function testResolveSplitPoints()
     {
         $dataSets = [
@@ -246,10 +264,14 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $InterestPeriod->variableInterestCountry = $listItem['country'];
             $result = $InterestPeriod->resolveSplitPoints($listItem);
+
             $this->assertTrue($listItem['assertedSplitPoints'] == $result['splitPoints']);
         }
     }
 
+    /**
+     * Test resolveLastDates method
+     */
     public function testResolveLastDates()
     {
         $dataSets = [
@@ -354,10 +376,14 @@ class InterestPeriodTestCase extends CakeTestCase
             $InterestPeriod = new InterestPeriod();
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $result = $InterestPeriod->resolveLastDates($listItem);
+
             $this->assertTrue($listItem['assertedPreparedPeriods'] == $result['preparedPeriods']);
         }
     }
 
+    /**
+     * Test calculateInterests method
+     */
     public function testCalculateInterests()
     {
         $dataSets = [
@@ -497,11 +523,15 @@ class InterestPeriodTestCase extends CakeTestCase
         foreach ($dataSets as $listItem) {
             $InterestPeriod = new InterestPeriod();
             $result = $InterestPeriod->calculateInterests($listItem);
+
             $this->assertTrue($listItem['assertedPreparedPeriods'] == $result['preparedPeriods']);
         }
     }
 
-    public function testPreparePeriods()
+    /**
+     * Test calculate method
+     */
+    public function testCalculate()
     {
         $dataSets = [
             [
@@ -826,10 +856,13 @@ class InterestPeriodTestCase extends CakeTestCase
 
         foreach ($dataSets as $listItem) {
             $InterestPeriod = new InterestPeriod();
+
             $InterestPeriod->interestCalculationType = $listItem['interestCalculationType'];
             $InterestPeriod->interestDate = $listItem['lastDate'];
             $InterestPeriod->variableInterestCountry = $listItem['country'];
-            $result = $InterestPeriod->preparePeriods($listItem);
+
+            $result = $InterestPeriod->calculate($listItem);
+
             if ($listItem['assert']) {
                 $this->assertTrue($listItem['assertedPeriods'] == $result);
             } else {

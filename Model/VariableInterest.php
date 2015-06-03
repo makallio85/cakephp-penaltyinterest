@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * app/Plugin/PenaltyInterest/Model/VariableInterest.php
+ */
+
+/**
  * VariableInterest model
  */
 
