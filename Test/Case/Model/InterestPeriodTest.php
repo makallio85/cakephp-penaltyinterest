@@ -94,11 +94,11 @@ class InterestPeriodTestCase extends CakeTestCase
                 'valuePayments' => [
                     [
                         'hundrethValue' => (int) 100,
-                        'date' => '2014-05-15',
+                        'date' => '2014-07-22',
                     ],
                     [
                         'hundrethValue' => (int) 100,
-                        'date' => '2014-07-22',
+                        'date' => '2014-05-15',
                     ],
                 ],
                 'assertedPaymentPeriods' => [
@@ -130,11 +130,11 @@ class InterestPeriodTestCase extends CakeTestCase
                     ],
                     [
                         'hundrethValue' => (int) 100,
-                        'date' => '2014-07-22',
+                        'date' => '2014-09-30',
                     ],
                     [
                         'hundrethValue' => (int) 100,
-                        'date' => '2014-09-30',
+                        'date' => '2014-07-22',
                     ],
                 ],
                 'assertedPaymentPeriods' => [
@@ -178,7 +178,6 @@ class InterestPeriodTestCase extends CakeTestCase
         $dataSets = [
             [
                 'interestPercentType' => 'fixed',
-                'country' => 'FIN',
                 'lastDate' => '2014-12-31',
                 'preparedPaymentPeriods' => [
                     [
@@ -214,7 +213,6 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'interestPercentType' => 'fixed',
-                'country' => 'FIN',
                 'lastDate' => '2014-12-31',
                 'preparedPaymentPeriods' => [
                     [
@@ -262,7 +260,6 @@ class InterestPeriodTestCase extends CakeTestCase
         foreach ($dataSets as $listItem) {
             $InterestPeriod = new InterestPeriod();
             $InterestPeriod->interestDate = $listItem['lastDate'];
-            $InterestPeriod->variableInterestCountry = $listItem['country'];
             $result = $InterestPeriod->resolveSplitPoints($listItem);
 
             $this->assertTrue($listItem['assertedSplitPoints'] == $result['splitPoints']);
@@ -536,8 +533,6 @@ class InterestPeriodTestCase extends CakeTestCase
         $dataSets = [
             [
                 'assert' => false,
-                'country' => 'FIN',
-                'interestCalculationType' => 'english',
                 'interestPercentType' => 'variable',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
@@ -607,9 +602,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'country' => 'FIN',
                 'interestPercentType' => 'variable',
-                'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
                 'firstDate' => '2014-01-01',
@@ -678,9 +671,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'country' => 'FIN',
                 'interestPercentType' => 'variable',
-                'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
                 'firstDate' => '2014-01-01',
@@ -766,9 +757,7 @@ class InterestPeriodTestCase extends CakeTestCase
             ],
             [
                 'assert' => true,
-                'country' => 'FIN',
                 'interestPercentType' => 'variable',
-                'interestCalculationType' => 'english',
                 'hundrethBaseValue' => (int) 10000,
                 'tenThousandthPercent' => (int) 100000,
                 'firstDate' => '2014-01-01',
@@ -856,10 +845,7 @@ class InterestPeriodTestCase extends CakeTestCase
 
         foreach ($dataSets as $listItem) {
             $InterestPeriod = new InterestPeriod();
-
-            $InterestPeriod->interestCalculationType = $listItem['interestCalculationType'];
             $InterestPeriod->interestDate = $listItem['lastDate'];
-            $InterestPeriod->variableInterestCountry = $listItem['country'];
 
             $result = $InterestPeriod->calculate($listItem);
 

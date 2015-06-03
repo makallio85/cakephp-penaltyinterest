@@ -34,13 +34,13 @@ class InterestPeriod extends PenaltyInterestAppModel
      * Country to use, when interests are calculated with variable rate
      * @var string
      */
-    public $variableInterestCountry = null;
+    protected $variableInterestCountry = 'FIN';
 
     /**
      * List of supported countries when requesting calculation with variable percent
      * @var array
      */
-    public $supportedCountries = ['FIN'];
+    protected $supportedCountries = ['FIN'];
 
     /**
      * InterestPeriod model constructor
@@ -106,6 +106,11 @@ class InterestPeriod extends PenaltyInterestAppModel
     {
         $data['preparedPaymentPeriods'] = [];
         $valueBackup = (int) $data['hundrethBaseValue'];
+
+        usort($data['valuePayments'], function ($a, $b) {
+            return $a['date'] > $b['date'];
+        });
+
         foreach ($data['valuePayments'] as $key => $listItem) {
             if ($key == 0) {
                 $data['preparedPaymentPeriods'][] = [
@@ -294,7 +299,7 @@ class InterestPeriod extends PenaltyInterestAppModel
 
         /* If interest type is variable, country must be present */
         if ($data['interestPercentType'] == 'variable') {
-            if (!isset($data['country']) || !in_array(strtoupper($data['country']), $this->supportedCountries)) {
+            if (isset($data['country']) && !in_array(strtoupper($data['country']), $this->supportedCountries)) {
                 $this->setStatus('INVALID_COUNTRY');
 
                 return false;
