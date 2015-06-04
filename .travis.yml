@@ -12,9 +12,9 @@ env:
     - REQUIRE="cakedc/migrations"
 
   matrix:
-    - DB=mysql CAKE_VERSION=2.4
-    - DB=mysql CAKE_VERSION=2.5
-    - DB=mysql CAKE_VERSION=2.6
+    - DB=mysql CAKE_VERSION=2.4.0
+    - DB=mysql CAKE_VERSION=2.5.0
+    - DB=mysql CAKE_VERSION=2.6.0
 
 matrix:
   include:
