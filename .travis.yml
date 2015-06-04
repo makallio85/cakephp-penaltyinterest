@@ -28,12 +28,7 @@ before_script:
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
   - 'sed -i'''' ''s|curl |curl -H "Authorization: token \$GITHUB_TOKEN" |g'' ../travis/before_script.sh'
   - ../travis/before_script.sh
-  - mv ../cakephp-penaltyinterest ../cakephp/app/Plugin/PenaltyInterest
-  - cd ..
-  - cd ..
-  - cd ..
-  - ls -al
-  - chmod -R 777 tmp
+  - mv ../cakephp-penaltyinterest plugins/PenaltyInterest
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - echo "<?php
     class DATABASE_CONFIG {
@@ -44,14 +39,13 @@ before_script:
       'login' => 'travis',
       'persistent' => false,
     );
-    }" > Config/database.php
+    }" > ../cakephp/app/Config/database.php
 
 script:
-  - cd Plugin/PenaltyInterest/travis
-  - script.sh
+  - ../travis/script.sh
 
 after_success:
-  - after_success.sh
+  - ../travis/after_success.sh
 
 notifications:
   email: false
