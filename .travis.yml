@@ -26,7 +26,10 @@ matrix:
 
 before_script:
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
-  - ../cakephp/lib/Cake/Console/cake Migrations.migration run --plugin PenaltyInterest
+  - cd ../
+  - ls -al
+  - cd ../cakephp/app
+  - ./cakephp/lib/Cake/Console/cake Migrations.migration run --plugin PenaltyInterest
   - ../travis/before_script.sh
 
 script:
