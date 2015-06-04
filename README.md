@@ -46,5 +46,5 @@ $data = [
 
 $Intr = new InterestPeriod();
 $Intr->interestDate = $data['lastDate'];
-$results = $PR->preparePeriods($data);
+$results = $Intr->preparePeriods($data);
 ```
