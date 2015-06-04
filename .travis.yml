@@ -47,10 +47,11 @@ before_script:
     }" > Config/database.php
 
 script:
-  - ../travis/script.sh
+  - cd Plugin/PenaltyInterest/travis
+  - script.sh
 
 after_success:
-  - ../travis/after_success.sh
+  - after_success.sh
 
 notifications:
   email: false
