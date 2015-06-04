@@ -29,8 +29,9 @@ before_script:
   - 'sed -i'''' ''s|curl |curl -H "Authorization: token \$GITHUB_TOKEN" |g'' ../travis/before_script.sh'
   - ../travis/before_script.sh
   - mv ../cakephp-penaltyinterest ../cakephp/app/Plugin/PenaltyInterest
-  - ls -al
-  - chmod -R 777 ../cakephp/app/tmp
+  - cd ..
+  - cd ..
+  - chmod -R 777 tmp
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - echo "<?php
     class DATABASE_CONFIG {
@@ -41,7 +42,7 @@ before_script:
       'login' => 'travis',
       'persistent' => false,
     );
-    }" > ../cakephp/app/Config/database.php
+    }" > Config/database.php
 
 script:
   - ../travis/script.sh
