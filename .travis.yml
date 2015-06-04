@@ -29,9 +29,7 @@ before_script:
   - 'sed -i'''' ''s|curl |curl -H "Authorization: token \$GITHUB_TOKEN" |g'' ../travis/before_script.sh'
   - ../travis/before_script.sh
   - mv ../cakephp-penaltyinterest ../cakephp/plugins/PenaltyInterest
-  - cd ../cakephp/app
-  - ls -al
-  - cd Config
+  - cd ../
   - ls -al
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - echo "<?php
