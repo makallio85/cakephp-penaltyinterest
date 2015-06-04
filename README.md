@@ -1,5 +1,6 @@
 [![Coverage Status](https://coveralls.io/repos/makallio85/cakephp-penaltyinterest/badge.svg)](https://coveralls.io/r/makallio85/cakephp-penaltyinterest)
 [![Build Status](https://travis-ci.org/makallio85/cakephp-penaltyinterest.svg)](https://travis-ci.org/makallio85/cakephp-penaltyinterest)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
 # cakephp-penaltyinterest
 CakePHP2 plugin to calculate penalty interests for desired time periods. Calculation also supports payments to base value.

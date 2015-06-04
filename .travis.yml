@@ -28,7 +28,7 @@ before_script:
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
   - 'sed -i'''' ''s|curl |curl -H "Authorization: token \$GITHUB_TOKEN" |g'' ../travis/before_script.sh'
   - ../travis/before_script.sh
-  - mv ../cakephp-penaltyinterest plugins/PenaltyInterest
+  - mv ../cakephp-penaltyinterest ../cakephp/plugins/PenaltyInterest
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - echo "<?php
     class DATABASE_CONFIG {
